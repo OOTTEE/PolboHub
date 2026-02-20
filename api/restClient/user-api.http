@@ -16,11 +16,10 @@ POST {{baseUrl}}{{apiPath}}
 Content-Type: {{contentType}}
 
 {
+  "username": "Juan",
   "firstName": "Juan",
   "lastName": "Pérez",
   "birthDate": "1990-05-15",
-  "licenseNumber": "LIC-001-2024",
-  "active": true
 }
 
 ### 2. CREATE USER - Another Valid User
@@ -30,11 +29,10 @@ POST {{baseUrl}}{{apiPath}}
 Content-Type: {{contentType}}
 
 {
+  "username": "María",
   "firstName": "María",
   "lastName": "García",
-  "birthDate": "1985-08-22",
-  "licenseNumber": "LIC-002-2024",
-  "active": true
+  "birthDate": "1985-08-22"
 }
 
 ### 3. CREATE USER - Missing Required Fields (firstName)
@@ -46,7 +44,6 @@ Content-Type: {{contentType}}
 {
   "lastName": "Rodríguez",
   "birthDate": "1992-03-10",
-  "licenseNumber": "LIC-003-2024",
   "active": true
 }
 
@@ -59,7 +56,6 @@ Content-Type: {{contentType}}
 {
   "firstName": "Carlos",
   "birthDate": "1988-11-30",
-  "licenseNumber": "LIC-004-2024",
   "active": true
 }
 
@@ -73,12 +69,10 @@ Content-Type: {{contentType}}
 {
   "firstName": "Ana",
   "lastName": "López",
-  "licenseNumber": "LIC-005-2024",
   "active": true
 }
 
 
-### 6. CREATE USER - Missing Required Fields (licenseNumber)
 ### Expected: 400 Bad Request
 
 POST {{baseUrl}}{{apiPath}}
@@ -102,7 +96,6 @@ Content-Type: {{contentType}}
   "firstName": "Future",
   "lastName": "Person",
   "birthDate": "2030-01-01",
-  "licenseNumber": "LIC-006-2024",
   "active": true
 }
 
@@ -117,7 +110,6 @@ Content-Type: {{contentType}}
   "firstName": "",
   "lastName": "Test",
   "birthDate": "1990-01-01",
-  "licenseNumber": "LIC-007-2024",
   "active": true
 }
 
@@ -132,7 +124,6 @@ Content-Type: {{contentType}}
   "firstName": "Duplicate",
   "lastName": "User",
   "birthDate": "1991-06-20",
-  "licenseNumber": "LIC-001-2024",
   "active": false
 }
 
@@ -172,10 +163,10 @@ PUT {{baseUrl}}{{apiPath}}/{{userId}}
 Content-Type: {{contentType}}
 
 {
+  "username": "Juan",
   "firstName": "Juan Carlos",
   "lastName": "Pérez García",
   "birthDate": "1990-05-15",
-  "licenseNumber": "LIC-001-2024-UPDATED",
   "active": true
 }
 
@@ -201,7 +192,6 @@ Content-Type: {{contentType}}
   "firstName": "Ghost",
   "lastName": "User",
   "birthDate": "1990-01-01",
-  "licenseNumber": "LIC-999-2024",
   "active": true
 }
 
@@ -215,7 +205,6 @@ Content-Type: {{contentType}}
   "firstName": "Juan Carlos",
   "lastName": "Pérez García",
   "birthDate": "1990-05-15",
-  "licenseNumber": "LIC-001-2024-UPDATED",
   "active": false
 }
 
@@ -229,7 +218,6 @@ Content-Type: {{contentType}}
   "firstName": "Juan Carlos",
   "lastName": "Pérez García",
   "birthDate": "1990-05-15",
-  "licenseNumber": "LIC-001-2024-UPDATED",
   "active": true
 }
 
@@ -270,7 +258,6 @@ Content-Type: {{contentType}}
   "firstName": "VeryLongFirstNameThatExceedsNormalLengthToTestDatabaseConstraintsAndValidationRulesInTheSystem",
   "lastName": "VeryLongLastNameThatExceedsNormalLengthToTestDatabaseConstraintsAndValidationRulesInTheSystem",
   "birthDate": "1993-12-25",
-  "licenseNumber": "LIC-LONG-2024",
   "active": true
 }
 
@@ -284,7 +271,6 @@ Content-Type: {{contentType}}
   "firstName": "José-María",
   "lastName": "O'Connor-Müller",
   "birthDate": "1987-04-14",
-  "licenseNumber": "LIC-SPECIAL-2024",
   "active": true
 }
 
@@ -298,7 +284,6 @@ Content-Type: {{contentType}}
   "firstName": "Veteran",
   "lastName": "Runner",
   "birthDate": "1930-01-01",
-  "licenseNumber": "LIC-VETERAN-2024",
   "active": true
 }
 
@@ -312,6 +297,5 @@ Content-Type: {{contentType}}
   "firstName": "Young",
   "lastName": "Runner",
   "birthDate": "2006-01-01",
-  "licenseNumber": "LIC-YOUNG-2024",
   "active": true
 }

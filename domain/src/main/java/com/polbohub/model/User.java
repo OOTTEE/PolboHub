@@ -7,11 +7,11 @@ import java.util.UUID;
 
 public record User(
         UUID id,
+        String username,
         String firstName,
         String lastName,
-        LocalDate birthDate,
-        String licenseNumber,
-        boolean active) {
+        LocalDate birthDate
+) {
 
     public int getAge() {
         if (this.birthDate() == null) return 0;

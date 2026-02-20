@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public User create(User dto) {
-        if (repository.existsByLicenseNumber(dto.licenseNumber())) {
+        if (repository.existsByUsername(dto.username())) {
             throw new IllegalArgumentException("License number already exists");
         }
         UserEntity entity = toEntity(dto);
@@ -46,14 +46,11 @@ public class UserService {
         UserEntity entity = repository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("User not found"));
         // Ensure license uniqueness if changed
-        if (!entity.getLicenseNumber().equals(dto.licenseNumber()) && repository.existsByLicenseNumber(dto.licenseNumber())) {
+        if (!entity.getUsername().equals(dto.username()) && repository.existsByUsername(dto.username())) {
             throw new IllegalArgumentException("License number already exists");
         }
         entity.setFirstName(dto.firstName());
         entity.setLastName(dto.lastName());
-        entity.setBirthDate(dto.birthDate());
-        entity.setLicenseNumber(dto.licenseNumber());
-        entity.setActive(dto.active());
         return toDto(repository.save(entity));
     }
 
@@ -64,22 +61,19 @@ public class UserService {
     private UserEntity toEntity(User dto) {
         UserEntity e = new UserEntity();
         e.setId(dto.id());
+        e.setUsername(dto.username());
         e.setFirstName(dto.firstName());
         e.setLastName(dto.lastName());
-        e.setBirthDate(dto.birthDate());
-        e.setLicenseNumber(dto.licenseNumber());
-        e.setActive(dto.active());
         return e;
     }
 
     private User toDto(UserEntity e) {
         return new User(
                 e.getId(),
+                e.getUsername(),
                 e.getFirstName(),
                 e.getLastName(),
-                e.getBirthDate(),
-                e.getLicenseNumber(),
-                e.isActive()
+                e.getBirthDate()
         );
     }
 }

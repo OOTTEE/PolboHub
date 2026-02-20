@@ -54,11 +54,10 @@ public class UserController implements UserApi {
     private User toDto(UserRequest request) {
         return new User(
                 request.getId(),
+                request.getUsername(),
                 request.getFirstName(),
                 request.getLastName(),
-                request.getBirthDate(),
-                request.getLicenseNumber(),
-                request.isActive()
+                request.getBirthDate()
         );
     }
 
@@ -67,9 +66,6 @@ public class UserController implements UserApi {
         response.setId(dto.id());
         response.setFirstName(dto.firstName());
         response.setLastName(dto.lastName());
-        response.setBirthDate(dto.birthDate());
-        response.setLicenseNumber(dto.licenseNumber());
-        response.setActive(dto.active());
         return response;
     }
 }
