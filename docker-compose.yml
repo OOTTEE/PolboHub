@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: polbohub-db
+    environment:
+      POSTGRES_DB: polbohub
+      POSTGRES_USER: polbohub
+      POSTGRES_PASSWORD: polbohub
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0.0
+    container_name: polbohub-keycloak
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: admin
+    command: start-dev
+    ports:
+      - "8081:8080"
+
+  app:
+    build: .
+    container_name: polbohub-app
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/polbohub
+      DB_USER: polbohub
+      DB_PASSWORD: polbohub
+      KEYCLOAK_ISSUER_URI: http://keycloak:8080/realms/polbohub
+    depends_on:
+      - db
+      - keycloak
+
+volumes:
+  postgres_data:

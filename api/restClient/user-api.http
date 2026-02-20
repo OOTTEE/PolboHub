@@ -1,0 +1,317 @@
+
+### User API Test Suite
+### Base URL: http://localhost:8080
+
+
+### Environment Variables
+@baseUrl = http://localhost:8080
+@apiPath = /api/v1/users
+@contentType = application/json
+
+
+### 1. CREATE USER - Valid Request
+
+# @name createUser
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Juan",
+  "lastName": "Pérez",
+  "birthDate": "1990-05-15",
+  "licenseNumber": "LIC-001-2024",
+  "active": true
+}
+
+### 2. CREATE USER - Another Valid User
+
+# @name createUser2
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "María",
+  "lastName": "García",
+  "birthDate": "1985-08-22",
+  "licenseNumber": "LIC-002-2024",
+  "active": true
+}
+
+### 3. CREATE USER - Missing Required Fields (firstName)
+### Expected: 400 Bad Request
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "lastName": "Rodríguez",
+  "birthDate": "1992-03-10",
+  "licenseNumber": "LIC-003-2024",
+  "active": true
+}
+
+### 4. CREATE USER - Missing Required Fields (lastName)
+### Expected: 400 Bad Request
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Carlos",
+  "birthDate": "1988-11-30",
+  "licenseNumber": "LIC-004-2024",
+  "active": true
+}
+
+
+### 5. CREATE USER - Missing Required Fields (birthDate)
+### Expected: 400 Bad Request
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Ana",
+  "lastName": "López",
+  "licenseNumber": "LIC-005-2024",
+  "active": true
+}
+
+
+### 6. CREATE USER - Missing Required Fields (licenseNumber)
+### Expected: 400 Bad Request
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Pedro",
+  "lastName": "Martínez",
+  "birthDate": "1995-07-18",
+  "active": true
+}
+
+
+### 7. CREATE USER - Future Birth Date (Invalid)
+### Expected: 400 Bad Request
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Future",
+  "lastName": "Person",
+  "birthDate": "2030-01-01",
+  "licenseNumber": "LIC-006-2024",
+  "active": true
+}
+
+
+### 8. CREATE USER - Blank firstName
+### Expected: 400 Bad Request
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "",
+  "lastName": "Test",
+  "birthDate": "1990-01-01",
+  "licenseNumber": "LIC-007-2024",
+  "active": true
+}
+
+
+### 9. CREATE USER - Duplicate License Number
+### Expected: 409 Conflict or 400 Bad Request
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Duplicate",
+  "lastName": "User",
+  "birthDate": "1991-06-20",
+  "licenseNumber": "LIC-001-2024",
+  "active": false
+}
+
+
+### 10. GET ALL USERS
+
+GET {{baseUrl}}{{apiPath}}
+Accept: {{contentType}}
+
+
+### 11. GET USER BY ID - Valid ID
+### Note: Replace with actual UUID from createUser response
+
+@userId = {{createUser.response.body.$.id}}
+
+GET {{baseUrl}}{{apiPath}}/{{userId}}
+Accept: {{contentType}}
+
+
+### 12. GET USER BY ID - Non-existent ID
+### Expected: 404 Not Found
+
+GET {{baseUrl}}{{apiPath}}/00000000-0000-0000-0000-000000000000
+Accept: {{contentType}}
+
+
+### 13. GET USER BY ID - Invalid UUID Format
+### Expected: 400 Bad Request
+
+GET {{baseUrl}}{{apiPath}}/invalid-uuid
+Accept: {{contentType}}
+
+
+### 14. UPDATE USER - Valid Update
+
+PUT {{baseUrl}}{{apiPath}}/{{userId}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Juan Carlos",
+  "lastName": "Pérez García",
+  "birthDate": "1990-05-15",
+  "licenseNumber": "LIC-001-2024-UPDATED",
+  "active": true
+}
+
+
+### 15. UPDATE USER - Partial Update (Missing Fields)
+### Expected: 400 Bad Request
+
+PUT {{baseUrl}}{{apiPath}}/{{userId}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Only First Name"
+}
+
+
+### 16. UPDATE USER - Non-existent User
+### Expected: 404 Not Found
+
+PUT {{baseUrl}}{{apiPath}}/00000000-0000-0000-0000-000000000000
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Ghost",
+  "lastName": "User",
+  "birthDate": "1990-01-01",
+  "licenseNumber": "LIC-999-2024",
+  "active": true
+}
+
+
+### 17. UPDATE USER - Deactivate User
+
+PUT {{baseUrl}}{{apiPath}}/{{userId}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Juan Carlos",
+  "lastName": "Pérez García",
+  "birthDate": "1990-05-15",
+  "licenseNumber": "LIC-001-2024-UPDATED",
+  "active": false
+}
+
+
+### 18. UPDATE USER - Reactivate User
+
+PUT {{baseUrl}}{{apiPath}}/{{userId}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Juan Carlos",
+  "lastName": "Pérez García",
+  "birthDate": "1990-05-15",
+  "licenseNumber": "LIC-001-2024-UPDATED",
+  "active": true
+}
+
+
+### 19. DELETE USER - Valid ID
+### Expected: 204 No Content
+
+@userId2 = {{createUser2.response.body.$.id}}
+
+DELETE {{baseUrl}}{{apiPath}}/{{userId2}}
+
+
+### 20. DELETE USER - Non-existent ID
+### Expected: 404 Not Found
+
+DELETE {{baseUrl}}{{apiPath}}/00000000-0000-0000-0000-000000000000
+
+
+### 21. DELETE USER - Invalid UUID Format
+### Expected: 400 Bad Request
+
+DELETE {{baseUrl}}{{apiPath}}/not-a-valid-uuid
+
+
+### 22. GET DELETED USER - Should Not Exist
+### Expected: 404 Not Found
+
+GET {{baseUrl}}{{apiPath}}/{{userId2}}
+Accept: {{contentType}}
+
+
+### 23. CREATE USER - Edge Case: Very Long Names
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "VeryLongFirstNameThatExceedsNormalLengthToTestDatabaseConstraintsAndValidationRulesInTheSystem",
+  "lastName": "VeryLongLastNameThatExceedsNormalLengthToTestDatabaseConstraintsAndValidationRulesInTheSystem",
+  "birthDate": "1993-12-25",
+  "licenseNumber": "LIC-LONG-2024",
+  "active": true
+}
+
+
+### 24. CREATE USER - Edge Case: Special Characters in Names
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "José-María",
+  "lastName": "O'Connor-Müller",
+  "birthDate": "1987-04-14",
+  "licenseNumber": "LIC-SPECIAL-2024",
+  "active": true
+}
+
+
+### 25. CREATE USER - Edge Case: Old Birth Date
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Veteran",
+  "lastName": "Runner",
+  "birthDate": "1930-01-01",
+  "licenseNumber": "LIC-VETERAN-2024",
+  "active": true
+}
+
+
+### 26. CREATE USER - Edge Case: Recent Birth Date (18 years ago)
+
+POST {{baseUrl}}{{apiPath}}
+Content-Type: {{contentType}}
+
+{
+  "firstName": "Young",
+  "lastName": "Runner",
+  "birthDate": "2006-01-01",
+  "licenseNumber": "LIC-YOUNG-2024",
+  "active": true
+}
