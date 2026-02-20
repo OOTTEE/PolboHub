@@ -64,6 +64,7 @@ public class UserService {
         e.setUsername(dto.username());
         e.setFirstName(dto.firstName());
         e.setLastName(dto.lastName());
+        e.setBirthDate(dto.birthDate());
         return e;
     }
 

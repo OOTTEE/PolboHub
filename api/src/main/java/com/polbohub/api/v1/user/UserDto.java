@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.UUID;
 
-public class UserRequest {
+public class UserDto {
     private UUID id;
     @NotBlank
     private String username;

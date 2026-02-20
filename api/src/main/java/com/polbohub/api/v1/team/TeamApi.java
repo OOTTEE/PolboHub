@@ -1,4 +1,4 @@
-package com.polbohub.api.v1.user;
+package com.polbohub.api.v1.team;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -7,21 +7,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@RequestMapping("/api/v1/users")
-public interface UserApi {
+@RequestMapping("/api/v1/teams")
+public interface TeamApi {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserDto create(@Valid @RequestBody UserDto dto);
+    public TeamDto create(@Valid @RequestBody TeamDto dto);
 
     @GetMapping("/{id}")
-    public UserDto get(@PathVariable UUID id);
+    public TeamDto get(@PathVariable UUID id);
 
     @GetMapping
-    public List<UserDto> list();
+    public List<TeamDto> list();
 
     @PutMapping("/{id}")
-    public UserDto update(@PathVariable UUID id, @Valid @RequestBody UserDto dto);
+    public TeamDto update(@PathVariable UUID id, @Valid @RequestBody TeamDto dto);
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
