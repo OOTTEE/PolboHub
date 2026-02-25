@@ -9,7 +9,7 @@ import {
 export const marksEntity = pgTable('marks', {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     licence: varchar('license', {length: 10} ),
-    name: varchar('name', {length: 50} ),
+    name: varchar('name'),
     year: integer(),
     club: varchar('club', {length: 50} ),
     event: varchar('event', {length: 10} ),

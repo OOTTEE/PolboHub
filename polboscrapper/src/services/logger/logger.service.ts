@@ -20,6 +20,10 @@ export class Logger {
         logger.debug({...metadata, context: this.context}, message)
     }
 
+    trace(message: string, metadata?: Record<string, any>) {
+        logger.trace({...metadata, context: this.context}, message)
+    }
+
     error(message: string, error?: unknown, metadata?: Record<string, any>) {
         if (error instanceof Error) {
             logger.error({...metadata, context: this.context, message: error.message, stack: error.stack}, message);

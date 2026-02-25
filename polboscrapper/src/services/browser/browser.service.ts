@@ -25,9 +25,10 @@ export class BrowserService {
             this.logger.debug('Initializing headless browser');
             this.logger.debug('Using Chromium channel: chromium');
             this.browser = await chromium.launch({
-                headless: false,
-                // channel: 'chromium',
-                chromiumSandbox: false
+                headless: true,
+                channel: 'chromium',
+                chromiumSandbox: false,
+                slowMo: 1000
             });
             this.initialized = true;
             this.logger.debug('Browser initialized');
