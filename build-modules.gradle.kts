@@ -14,6 +14,10 @@ subprojects {
     }
 
     dependencies {
+        "implementation"("org.springframework.boot:spring-boot-starter")
+        "implementation"("org.springframework.boot:spring-boot-validation")
+        "implementation"("org.springframework.boot:spring-boot-data-jpa")
+
         "testImplementation"("org.springframework.boot:spring-boot-starter-test")
         "testRuntimeOnly"("org.junit.platform:junit-platform-launcher")
     }

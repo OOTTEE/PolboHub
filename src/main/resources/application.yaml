@@ -33,4 +33,13 @@ spring:
 logging:
   level:
     root: INFO
+    org.springframework.web: DEBUG
     org.flywaydb: DEBUG
+
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+    version: openapi-3-1
+  pathsToMatch: /api/v1/**
+  packagesToScan: com.polbohub.api.v1

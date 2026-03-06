@@ -1,10 +1,13 @@
 
 @baseUrl = http://localhost:3000/api
 
-POST {{baseUrl}}/marks/scrap?year=2026
+POST {{baseUrl}}/scrap?year=2026
 
 
 ###
-
 GET {{baseUrl}}/marks
+###
+GET {{baseUrl}}/marks?page=2&limit=20
+
+
 

@@ -1,5 +1,6 @@
 rootProject.name = "Polbohub"
-include("core")
-include("domain")
-include("api")
-include("persistence")
+include(":api")
+include(":domain")
+include(":application")
+include(":persistence")
+include(":rest")

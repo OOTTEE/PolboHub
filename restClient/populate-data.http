@@ -1,0 +1,82 @@
+### Environment Variables
+@baseUrl = http://localhost:8080
+
+### Create Team "escualos"
+POST {{baseUrl}}/api/v1/teams
+Content-Type: application/json
+
+{
+  "name": "escualos",
+  "sport": "SWIMMING"
+}
+
+> {%
+    client.global.set("team_id", response.body.id);
+%}
+
+### Create User 1
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "ote",
+  "firstName": "Javier",
+  "lastName": "Lorenzo Martin",
+  "birthDate": "1989-10-01"
+}
+
+> {%
+    client.global.set("user1_id", response.body.id);
+%}
+
+### Create Player 1 (Member of escualos)
+POST {{baseUrl}}/api/v1/players
+Content-Type: application/json
+
+{
+  "licenseNumber": "1143606",
+  "teamId": "{{team_id}}",
+  "userId": "{{user1_id}}"
+}
+
+
+### Create User 2
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "martiño",
+  "firstName": "Martiño",
+  "lastName": "Fortes Novoa",
+  "birthDate": "1988-05-15"
+}
+
+> {%
+    client.global.set("user2_id", response.body.id);
+%}
+
+### Create Player 2 (Member of escualos)
+POST {{baseUrl}}/api/v1/players
+Content-Type: application/json
+
+{
+  "licenseNumber": "1143890",
+  "teamId": "{{team_id}}",
+  "userId": "{{user2_id}}"
+}
+
+
+### Create User 3
+POST {{baseUrl}}/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "rubenas",
+  "firstName": "Ruben",
+  "lastName": "Alvarez Silva",
+  "birthDate": "1981-11-20"
+}
+
+> {%
+    client.global.set("user3_id", response.body.id);
+%}

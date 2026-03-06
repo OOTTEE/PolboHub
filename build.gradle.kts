@@ -18,9 +18,11 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":core"))
-    implementation(project(":persistence"))
     implementation(project(":api"))
+    implementation(project(":domain"))
+    implementation(project(":application"))
+    implementation(project(":persistence"))
+    implementation(project(":rest"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
@@ -43,5 +45,3 @@ tasks.named("bootJar") {
 tasks.named("jar") {
     enabled = true
 }
-
-
