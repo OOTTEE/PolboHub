@@ -3,26 +3,26 @@ import {feganService} from "../../services/fegan/fegan.service";
 
 const schema: RouteShorthandOptions = {
     schema: {
-        "querystring": {
+        querystring: {
             type: 'object',
             properties: {
                 page: {type: 'integer', default: 1},
                 limit: {type: 'integer', default: 10},
-                license: {type: 'string', optional: true},
-                name: {type: 'string', optional: true},
-                year: {type: 'integer', optional: true},
-                fromYear: {type: 'integer', optional: true},
-                toYear: {type: 'integer', optional: true},
-                club: {type: 'string', optional: true},
-                event: {type: 'string', optional: true},
-                cp: {type: 'string', optional: true},
-                date: {type: 'string', format: 'date', optional: true},
-                fromDate: {type: 'string', format: 'date', optional: true},
-                toDate: {type: 'string', format: 'date', optional: true},
-                place: {type: 'string', optional: true},
-                partial: {type: 'boolean', optional: true},
-                minMark: {type: 'number', optional: true, format: 'float'},
-                maxMark: {type: 'number', optional: true, format: 'float'}
+                license: {type: 'string'},
+                name: {type: 'string'},
+                year: {type: 'integer'},
+                fromYear: {type: 'integer'},
+                toYear: {type: 'integer'},
+                club: {type: 'string'},
+                event: {type: 'string'},
+                cp: {type: 'string'},
+                date: {type: 'string', format: 'date'},
+                fromDate: {type: 'string', format: 'date'},
+                toDate: {type: 'string', format: 'date'},
+                place: {type: 'string'},
+                partial: {type: 'boolean'},
+                minMark: {type: 'number', format: 'float'},
+                maxMark: {type: 'number', format: 'float'}
             }
         },
         response: {
@@ -44,7 +44,8 @@ const schema: RouteShorthandOptions = {
                                 date: {type: 'string', format: 'date-time'},
                                 place: {type: 'string'},
                                 partial: {type: 'boolean'},
-                                mark: {type: 'number'}
+                                mark: {type: 'number'},
+                                gender: {type: 'string'}
                             }
                         }
                     },

@@ -1,4 +1,4 @@
-import {FastifyPluginAsync, RouteShorthandOptions} from 'fastify'
+import {FastifyPluginAsync, FastifyReply, FastifyRequest, RouteShorthandOptions} from 'fastify'
 import {feganService} from "../../services/fegan/fegan.service";
 
 const schema: RouteShorthandOptions = {
@@ -17,14 +17,17 @@ const schema: RouteShorthandOptions = {
     }
 }
 
-const marks: FastifyPluginAsync = async (fastify, opts) => {
 
-    fastify.post('/scrap', schema, async (request, reply) => {
+
+
+const scrap: FastifyPluginAsync = async (fastify, opts) => {
+
+    fastify.post('/', schema, async (request: FastifyRequest, reply: FastifyReply) => {
         const { year } = request.query as { year: number };
         await feganService.scrapMarksFromYear(year);
-        return feganService.listMarks();
+        return reply.status(200).send();
     })
 
 }
 
-export default marks
+export default scrap;

@@ -1,9 +1,9 @@
-import { Page } from 'playwright';
-import { browserService } from '../browser/browser.service';
-import { db } from '../../db';
-import { marksEntity } from '../../db/schema/schema';
-import { Logger } from '../logger/logger.service';
-import { serverConfig } from '../../config/server.config';
+import {Page} from 'playwright';
+import {browserService} from '../browser/browser.service';
+import {db} from '../../db';
+import {marksEntity} from '../../db/schema/schema';
+import {Logger} from '../logger/logger.service';
+import {serverConfig} from '../../config/server.config';
 
 export class FeganScrapperService {
     private static instance: FeganScrapperService;
@@ -19,6 +19,11 @@ export class FeganScrapperService {
     }
 
     public async scrapMarks(request: FeganScrapperRequest) : Promise<void> {
+
+        if(request.gender === undefined) {
+            throw new Error('Gender is required');
+        }
+
         const page: Page = await browserService.getPage();
 
         this.logger.debug(`Navigating to Fegan marks page ${FeganScrapperService.baseUrl}`);
@@ -35,7 +40,7 @@ export class FeganScrapperService {
 
         await page.waitForLoadState('networkidle' );
 
-        await this. readTableResults(page);
+        await this.readTableResults(page, request.gender);
 
         await page.close();
     }
@@ -67,7 +72,7 @@ export class FeganScrapperService {
         ])
     }
 
-    private async readTableResults(page: Page) : Promise<void> {
+    private async readTableResults(page: Page, gender: GenderCode) : Promise<void> {
         this.logger.debug("Reading table results");
         const tableResults = await page.evaluate(() => {
             const container = document.getElementById('dvData') ?? document;
@@ -104,7 +109,8 @@ export class FeganScrapperService {
                 cp: row.cp,
                 date: this.parseDate(row.date),
                 place: row.place,
-                partial: (row.partial || '').toUpperCase() === 'S'
+                partial: (row.partial || '').toUpperCase() === 'S',
+                gender: gender
             } as any;
 
             await this.insertMark(toInsert);

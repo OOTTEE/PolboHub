@@ -1,15 +1,10 @@
-import {
-    pgTable,
-    date,
-    varchar,
-    integer,
-    boolean, numeric
-} from 'drizzle-orm/pg-core'
+import {boolean, date, integer, numeric, pgTable, varchar} from 'drizzle-orm/pg-core'
 
 export const marksEntity = pgTable('marks', {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
     licence: varchar('license', {length: 10} ),
     name: varchar('name'),
+    gender: varchar('gender', {length: 1} ),
     year: integer(),
     club: varchar('club', {length: 50} ),
     event: varchar('event', {length: 10} ),
