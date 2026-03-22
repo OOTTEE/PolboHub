@@ -1,5 +1,5 @@
 {
-  "name": "fegan-scrapper",
+  "name": "polbo-scrapper",
   "version": "1.0.0",
   "description": "This is a scrapper for the fegan website.",
   "main": "app.ts",
