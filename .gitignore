@@ -37,3 +37,5 @@ out/
 ### VS Code ###
 .vscode/
 /api/generated/
+*/**/dist/
+*/**/node_modules/
